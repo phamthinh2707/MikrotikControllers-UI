@@ -1,0 +1,309 @@
+[
+	{
+		"ScriptIndex": 1,
+		"ScriptValue": [
+			"/system/clock/set",
+			"=time-zone-name=Asia/Ho_Chi_Minh"
+		]
+	},
+	{
+		"ScriptIndex": 2,
+		"ScriptValue": [
+			"/interface/bridge/add",
+			"=name=LAN"
+		]
+	},
+	{
+		"ScriptIndex": 3,
+		"ScriptValue": [
+			"/interface/bridge/port/add",
+			"=bridge=LAN",
+			"=interface=ether2"
+		]
+	},
+	{
+		"ScriptIndex": 4,
+		"ScriptValue": [
+			"/interface/bridge/port/add",
+			"=bridge=LAN",
+			"=interface=ether3"
+		]
+	},
+	{
+		"ScriptIndex": 5,
+		"ScriptValue": [
+			"/interface/bridge/port/add",
+			"=bridge=LAN",
+			"=interface=ether4"
+		]
+	},
+	{
+		"ScriptIndex": 6,
+		"ScriptValue": [
+			"/interface/bridge/port/add",
+			"=bridge=LAN",
+			"=interface=ether5"
+		]
+	},
+	{
+		"ScriptIndex": 7,
+		"ScriptValue": [
+			"/interface/bridge/port/add",
+			"=bridge=LAN",
+			"=interface=wlan1"
+		]
+	},
+	{
+		"ScriptIndex": 8,
+		"ScriptValue": [
+			"/interface/vlan/add",
+			"=interface=LAN",
+			"=name=VLAN 10",
+			"=vlan-id=10"
+		]
+	},
+	{
+		"ScriptIndex": 9,
+		"ScriptValue": [
+			"/ip/address/add",
+			"=address=192.168.1.1/24",
+			"=interface=LAN",
+			"=network=192.168.1.0"
+		]
+	},
+	{
+		"ScriptIndex": 10,
+		"ScriptValue": [
+			"/ip/address/add",
+			"=address=10.5.50.1/16",
+			"=interface=VLAN 10",
+			"=network=10.5.0.0"
+		]
+	},
+	{
+		"ScriptIndex": 11,
+		"ScriptValue": [
+			"/ip/pool/add",
+			"=name=dhcp_pool0",
+			"=ranges=192.168.1.10-192.168.1.169"
+		]
+	},
+	{
+		"ScriptIndex": 12,
+		"ScriptValue": [
+			"/ip/pool/add",
+			"=name=dhcp_pool1",
+			"=ranges=10.5.0.1-10.5.50.0,10.5.50.2-10.5.255.254"
+		]
+	},
+	{
+		"ScriptIndex": 13,
+		"ScriptValue": [
+			"/ip/dhcp-server/add",
+			"=address-pool=dhcp_pool0",
+			"=disabled=no",
+			"=interface=LAN",
+			"=lease-time=4h",
+			"=name=dhcp1"
+		]
+	},
+	{
+		"ScriptIndex": 14,
+		"ScriptValue": [
+			"/ip/dhcp-server/add",
+			"=address-pool=dhcp_pool1",
+			"=disabled=no",
+			"=interface=VLAN 10",
+			"=lease-time=2h",
+			"=name=dhcp2"
+		]
+	},
+	{
+		"ScriptIndex": 15,
+		"ScriptValue": [
+			"/ip/dhcp-server/network/add",
+			"=address=10.5.0.0/16",
+			"=gateway=10.5.50.1"
+		]
+	},
+	{
+		"ScriptIndex": 16,
+		"ScriptValue": [
+			"/ip/dhcp-server/network/add",
+			"=address=192.168.1.0/24",
+			"=gateway=192.168.1.1"
+		]
+	},
+	{
+		"ScriptIndex": 17,
+		"ScriptValue": [
+			"/ip/firewall/filter/add",
+			"=action=passthrough",
+			"=chain=unused-hs-chain",
+			"=comment=place hotspot rules here",
+			"=disabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 18,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=passthrough",
+			"=chain=unused-hs-chain",
+			"=comment=place hotspot rules here",
+			"=disabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 19,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=masquerade",
+			"=chain=srcnat"
+		]
+	},
+	{
+		"ScriptIndex": 20,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=dst-nat",
+			"=chain=dstnat",
+			"=dst-port=4370",
+			"=protocol=tcp",
+			"=to-addresses=192.168.1.201",
+			"=to-ports=4370"
+		]
+	},
+	{
+		"ScriptIndex": 21,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=dst-nat",
+			"=chain=dstnat",
+			"=dst-port=6036",
+			"=protocol=tcp",
+			"=to-addresses=192.168.1.200",
+			"=to-ports=6036"
+		]
+	},
+	{
+		"ScriptIndex": 22,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=dst-nat=chain=dstnat",
+			"=dst-port=81",
+			"=protocol=tcp",
+			"=to-addresses=192.168.1.200",
+			"=to-ports=81"
+		]
+	},
+	{
+		"ScriptIndex": 23,
+		"ScriptValue": [
+			"/interface/wireless/set",
+			"=.id=wlan1",
+			"=band=2ghz-b/g/n",
+			"=disabled=no",
+			"=frequency=2462",
+			"=mode=ap-bridge",
+			"=security-profile=wlan1-CaPhe191-repeater",
+			"=ssid=MasterIT"
+		]
+	},
+	{
+		"ScriptIndex": 24,
+		"ScriptValue": [
+			"/interface/pptp-server/server/set",
+			"=authentication=pap,chap,mschap1,mschap2",
+			"=enabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 25,
+		"ScriptValue": [
+			"/ip/cloud/set",
+			"=ddns-enabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 26,
+		"ScriptValue": [
+			"/ip/dns/set",
+			"=allow-remote-requests=yes"
+		]
+	},
+	{
+		"ScriptIndex": 27,
+		"ScriptValue": [
+			"/ip/service/set",
+			"=.id=telnet",
+			"=disabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 28,
+		"ScriptValue": [
+			"/ip/service/set",
+			"=.id=ftp",
+			"=disabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 29,
+		"ScriptValue": [
+			"/ip/service/set",
+			"=.id=ssh",
+			"=disabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 30,
+		"ScriptValue": [
+			"/ip/service/set",
+			"=.id=www-ssl",
+			"=disabled=no"
+		]
+	},
+	{
+		"ScriptIndex": 31,
+		"ScriptValue": [
+			"/ppp/secret/add",
+			"=local-address=192.168.1.1",
+			"=name=user",
+			"=password=123456",
+			"=remote-address=192.168.1.5",
+			"=service=pptp"
+		]
+	},
+	{
+		"ScriptIndex": 32,
+		"ScriptValue": [
+			"/system/routerboard/settings/set",
+			"=silent-boot=no"
+		]
+	},
+	{
+		"ScriptIndex": 33,
+		"ScriptValue": [
+			"/system/scheduler/add",
+			"=interval=1d",
+			"=name=Remove IP",
+			"=on-event=/ip dhcp-server lease  remove [find dynamic]",
+			"=policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon",
+			"=start-date=jan/01/1970",
+			"=start-time=00:09:00"
+		]
+	},
+	{
+		"ScriptIndex": 34,
+		"ScriptValue": [
+			"/system/scheduler/add",
+			"=interval=1d",
+			"=name=Reboot Router Daily",
+			"=on-event=/system reboot",
+			"=policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon",
+			"=start-date=jan/01/1970",
+			"=start-time=00:10:00"
+		]
+	}
+]

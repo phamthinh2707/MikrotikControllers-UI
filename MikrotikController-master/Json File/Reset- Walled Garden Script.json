@@ -1,0 +1,26 @@
+[{
+	"ScriptIndex": 1,
+	"ScriptValue": ["/system/reset-configuration", "=no-defaults=yes"]
+}, {
+	"ScriptIndex": 2,
+	"ScriptValue": ["/system/reset-configuration", "=keep-users=yes"]
+}, {
+	"ScriptIndex": 3,
+	"ScriptValue": ["/system/reset-configuration", "=skip-backup=yes"]
+}, {
+	"ScriptIndex": 4,
+	"ScriptValue": ["/system/reset-configuration", "=caps-mode=yes"]
+}, {
+	"ScriptIndex": 5,
+	"ScriptValue": ["/ip/hotspot/walled-garden/add", "=dst-host=*.wisky.vn", "=dst-host=*facebook*", "=dst-host=*akamai*", "=dst-host=*fbcdn*", "=dst-host=*google.com", "=dst-host=*gstatic*", "", "=dst-host=*itools*", "", "=dst-host=*ibook*", "", "=dst-host=*thinkdifferent*", "", "=dst-host=*airport* ", "", "=dst-host=*microsoft*", "", "=dst-host=*windowsphone*", "", "=dst-host=*zaloapp* ", "", "=dst-host=*skype* ", "", "=dst-host=*blob* ", "", "=dst-host=*mail* "]
+}, {
+	"ScriptIndex": 6,
+	"ScriptValue": [
+		"/interface/bridge/add",
+		"=fast-forward=no",
+		"=name=WLAN",
+		"/interface/bridge/port/add",
+		"=bridge=WLAN",
+		"=interface=wlan1",
+	]
+}]

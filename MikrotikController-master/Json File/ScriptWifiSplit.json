@@ -1,0 +1,169 @@
+[
+	{
+		"ScriptIndex": 1,
+		"ScriptValue": [
+			"/interface/bridge/add",
+			"=fast-forward=no",
+			"=name=WLAN"
+		]
+	},
+	{
+		"ScriptIndex": 2,
+		"ScriptValue": [
+			"/interface/bridge/port/add",
+			"=bridge=WLAN",
+			"=interface=wlan1"
+		]
+	},
+	{
+		"ScriptIndex": 3,
+		"ScriptValue": [
+			"/interface/wireless/set",
+			"=numbers=*1",
+			"=disabled=no",
+			"=mode=ap-bridge",
+			"=ssid=Testing Wifi Marketing"
+		]
+	},
+	{
+		"ScriptIndex": 4,
+		"ScriptValue": [
+			"/ip/address/add",
+			"=address=10.5.52.1/24",
+			"=interface=WLAN",
+			"=network=10.5.52.0"
+		]
+	},
+	{
+		"ScriptIndex": 5,
+		"ScriptValue": [
+			"/ip/pool/add",
+			"=name=dhcp_pool1",
+			"=ranges=10.5.52.2-10.5.52.254"
+		]
+	},
+	{
+		"ScriptIndex": 6,
+		"ScriptValue": [
+			"/ip/dhcp-server/add",
+			"=address-pool=dhcp_pool1",
+			"=disabled=no",
+			"=interface=WLAN",
+			"=name=dhcp2"
+		]
+	},
+	{
+		"ScriptIndex": 7,
+		"ScriptValue": [
+			"/ip/dhcp-server/network/add",
+			"=address=10.5.52.0/24",
+			"=gateway=10.5.52.1"
+		]
+	},
+	{
+		"ScriptIndex": 8,
+		"ScriptValue": [
+			"/ip/hotspot/profile/add",
+			"=hotspot-address=10.5.52.1",
+			"=login-by=http-pap",
+			"=name=hsprof1",
+			"=use-radius=yes"
+		]
+	},
+	{
+		"ScriptIndex": 9,
+		"ScriptValue": [
+			"/ip/hotspot/add",
+			"=address-pool=dhcp_pool1",
+			"=addresses-per-mac=1",
+			"=disabled=no",
+			"=interface=WLAN",
+			"=name=hotspot1",
+			"=profile=hsprof1"
+		]
+	},
+	{
+		"ScriptIndex": 10,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=passthrough",
+			"=chain=unused-hs-chain",
+			"=disabled=yes"
+		]
+	},
+	{
+		"ScriptIndex": 11,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=masquerade",
+			"=chain=srcnat"
+		]
+	},
+	{
+		"ScriptIndex": 12,
+		"ScriptValue": [
+			"/ip/firewall/nat/add",
+			"=action=masquerade",
+			"=chain=srcnat",
+			"=src-address=10.5.52.0/24"
+		]
+	},
+	{
+		"ScriptIndex": 13,
+		"ScriptValue": [
+			"/ip/hotspot/user/add",
+			"=name=admin"
+		]
+	},
+	{
+		"ScriptIndex": 14,
+		"ScriptValue": [
+			"/ip/hotspot/user/profile/set",
+			"=numbers=*0",
+			"=keepalive-timeout=1d2m",
+			"=shared-users=unlimited"
+		]
+	},
+	{
+		"ScriptIndex": 15,
+		"ScriptValue": [
+			"/radius/add",
+			"=accounting-port=9494",
+			"=address=202.78.227.93",
+			"=authentication-port=9493",
+			"=secret=12312323",
+			"=service=hotspot",
+			"=timeout=2s"
+		]
+	},
+	{
+		"ScriptIndex": 16,
+		"ScriptValue": [
+			"/system/script/add",
+			"=name=url",
+			"=source=:local mac [system routerboard get serial-number]; :if ([system routerboard get routerboard] = yes) do {:set mac [system routerboard get serial-number]} else {:set mac [interface ethernet get ether1 mac-address]}; /file set \"hotspot / login.html\" contents=\"< html > < head > < meta http - equiv=\"refresh\" content=\"0; url=http://splash.wisky.vn/Portal/Step1?apMac=$mac&userMac=/$(mac)&clientIp=/$(ip)&userUrl=/$(link-orig)&loginUrl=/$(link-login-only)\" /><meta http-equiv=\"pragma\" content=\"no-cache\"><meta http-equiv=\"expires\" content=\"-1\"></head></html>\""
+		]
+	},
+	{
+		"ScriptIndex": 17,
+		"ScriptValue": [
+			"/system/script/run",
+			"=.id=url"
+		]
+	},
+	{
+		"ScriptIndex": 18,
+		"ScriptValue": [
+			"/system/script/add",
+			"=name=wall_garden",
+			"=source={/ip hotspot walled-garden;add dst-host=*.wisky.vn;add dst-host=*facebook*;add dst-host=*akamai*;add dst-host=*fbcdn*;add dst-host=*google.com;add dst-host=*gstatic*;add dst-host=*itools*;add dst-host=*ibook*;add dst-host=*thinkdifferent*;add dst-host=*airport*;add dst-host=*microsoft*;add dst-host=*windowsphone*;add dst-host=*zaloapp*;add dst-host=*skype*;add dst-host=*mail*;add dst-host=*blob*}"
+		]
+	},
+	{
+		"ScriptIndex": 19,
+		"ScriptValue": [
+			"/system/script/run",
+			"=.id=wall_garden"
+		]
+	}
+]
