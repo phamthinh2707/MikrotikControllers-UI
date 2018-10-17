@@ -63,6 +63,16 @@ namespace tik4net.controller.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap collapse_arrow_filled_50 {
+            get {
+                object obj = ResourceManager.GetObject("collapse-arrow-filled-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap connect {
             get {
                 object obj = ResourceManager.GetObject("connect", resourceCulture);
@@ -86,6 +96,36 @@ namespace tik4net.controller.Properties {
         internal static System.Drawing.Bitmap ethernet {
             get {
                 object obj = ResourceManager.GetObject("ethernet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap expand_arrow_filled_50 {
+            get {
+                object obj = ResourceManager.GetObject("expand-arrow-filled-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_collapse_arrow_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-collapse-arrow-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_expand_arrow_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-expand-arrow-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

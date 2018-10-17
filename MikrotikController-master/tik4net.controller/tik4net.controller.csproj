@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>tik4net.controller</RootNamespace>
     <AssemblyName>tik4net.controller</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -168,6 +169,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collapse-arrow-filled-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\expand-arrow-filled-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-collapse-arrow-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-expand-arrow-16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

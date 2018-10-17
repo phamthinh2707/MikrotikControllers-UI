@@ -16,7 +16,8 @@ using System.Security.Cryptography;
 using tik4net.Objects.Interface;
 using tik4net.Objects;
 using Newtonsoft.Json;
-
+using Bulb;
+using tik4net.controller.Properties;
 
 namespace tik4net.controller
 {
@@ -30,6 +31,11 @@ namespace tik4net.controller
         public MainForm()
         {
             InitializeComponent();
+            lblConnectionStatus.Color = Color.Black;
+            txtCommand.ReadOnly = true;
+            btnSubmit.Enabled = false;
+            btnSystem.Enabled = false;
+            btnMenu.Enabled = false;
         }
         //
         // Script Object
@@ -99,7 +105,10 @@ namespace tik4net.controller
                     connection.OnWriteRow += Connection_OnWriteRow;
                     connection.Open(host, user, password);
                     btnSubmit.Enabled = true;
+                    btnSystem.Enabled = true;
+                    btnMenu.Enabled = true;
                     txtCommand.ReadOnly = false;
+                    lblConnectionStatus.Color = Color.GreenYellow;
                 }
                 catch (Exception ex)
                 {
@@ -259,5 +268,68 @@ namespace tik4net.controller
                 txtCommand.Text = "";
             }
         }
+        #region System Collasped Button
+        private bool isSystemCollapsed;
+        private void systemTimer_Tick(object sender, EventArgs e)
+        {
+            if (isSystemCollapsed)
+            {
+                btnSystem.Image = Resources.icons8_collapse_arrow_16;
+                panelSystem.Height += 10;
+                if(panelSystem.Size == panelSystem.MaximumSize)
+                {
+                    systemTimer.Stop();
+                    isSystemCollapsed = false;
+                }
+            } else
+            {
+                btnSystem.Image = Resources.icons8_expand_arrow_16;
+                panelSystem.Height -= 10;
+                if (panelSystem.Size == panelSystem.MinimumSize)
+                {
+                    systemTimer.Stop();
+                    isSystemCollapsed = true;
+                }
+            }
+        }
+
+        private void btnSystem_Click(object sender, EventArgs e)
+        {
+            systemTimer.Start();
+        }
+        #endregion
+
+        #region Menu Collapsed Button
+        private bool isMenuCollapsed;
+        private void menuTimer_Tick(object sender, EventArgs e)
+        {
+            if (isMenuCollapsed)
+            {
+                btnMenu.Image = Resources.icons8_collapse_arrow_16;
+                panelMenu.Height += 10;
+                if (panelMenu.Size == panelMenu.MaximumSize)
+                {
+                    menuTimer.Stop();
+                    isMenuCollapsed = false;
+                }
+            }
+            else
+            {
+                btnMenu.Image = Resources.icons8_expand_arrow_16;
+                panelMenu.Height -= 10;
+                if (panelMenu.Size == panelMenu.MinimumSize)
+                {
+                    menuTimer.Stop();
+                    isMenuCollapsed = true;
+                }
+            }
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            menuTimer.Start();
+        }
+        #endregion
+
     }
 }
