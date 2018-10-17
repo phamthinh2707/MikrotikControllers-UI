@@ -31,6 +31,9 @@
     <PackageReference Include="System.Net.Security" version="4.0.0.0" />       
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>

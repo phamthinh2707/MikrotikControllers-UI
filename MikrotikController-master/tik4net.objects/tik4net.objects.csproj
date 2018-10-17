@@ -32,6 +32,9 @@
      <DocumentationFile>bin\Release\net35\tik4net.objects.xml</DocumentationFile>
    </PropertyGroup>
    <ItemGroup>
+     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+   </ItemGroup>
+   <ItemGroup>
      <ProjectReference Include="..\tik4net\tik4net.csproj" />
    </ItemGroup>
 </Project>

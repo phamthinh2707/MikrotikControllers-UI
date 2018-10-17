@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bulb">
+      <HintPath>C:\Users\firel\Desktop\Bulb.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -119,6 +122,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ResetConfigurationForm.resx">
       <DependentUpon>ResetConfigurationForm.cs</DependentUpon>
@@ -152,6 +156,18 @@
       <Project>{15288f76-5a85-418e-87b2-b22265726601}</Project>
       <Name>tik4net</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connect.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\router.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ethernet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connect.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

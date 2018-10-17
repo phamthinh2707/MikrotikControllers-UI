@@ -10,32 +10,26 @@ using System.Text;
 using System.Threading.Tasks;
 using tik4net.Api;
 using tik4net;
-using Newtonsoft.Json;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using tik4net.Objects.Interface;
 using tik4net.Objects;
+using Newtonsoft.Json;
 
 
 namespace tik4net.controller
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api);
         private List<string> commandRows = new List<string>();
         private OpenFileDialog openFileDialog1 = new OpenFileDialog();
         public delegate ITikConnection sendConnection(ITikConnection con);
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            if (lblStatus.Text.Equals("Disconnect") || lblStatus.Text.Equals("Not Connected!"))
-            {
-                btnSubmit.Enabled = false;
-                tableOption.Visible = false;
-                txtCommand.ReadOnly = true;
-            }
         }
         //
         // Script Object
@@ -51,6 +45,7 @@ namespace tik4net.controller
         private void ExecuteCommand(string commandStr)
         {
             if (!string.IsNullOrWhiteSpace(commandStr))
+
                 commandRows.Add(commandStr);
             if (commandRows.Any())
             {
@@ -93,46 +88,27 @@ namespace tik4net.controller
         //
         private void btnConnect_MouseClick(object sender, MouseEventArgs e)
         {
-            string action = btnConnect.Text;
-            if (action == "Connect")
+            string host = txtHost.Text;
+            string user = txtUser.Text;
+            string password = txtPassword.Text;
+            if (!host.IsNullOrWhiteSpace() && !user.IsNullOrWhiteSpace())
             {
-                string host = txtHost.Text;
-                string user = txtUser.Text;
-                string password = txtPassword.Text;
-                if (!host.IsNullOrWhiteSpace() && !user.IsNullOrWhiteSpace())
+                try
                 {
-                    try
-                    {
-                        connection.OnReadRow += Connection_OnReadRow;
-                        connection.OnWriteRow += Connection_OnWriteRow;
-                        connection.Open(host, user, password);
-                        lblStatus.Text = "Connected";
-                        lblStatus.ForeColor = System.Drawing.Color.Green;
-                        tableOption.Visible = true;
-                        btnSubmit.Enabled = true;
-                        txtCommand.ReadOnly = false;
-                        btnConnect.Text = "Disconnect";
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
+                    connection.OnReadRow += Connection_OnReadRow;
+                    connection.OnWriteRow += Connection_OnWriteRow;
+                    connection.Open(host, user, password);
+                    btnSubmit.Enabled = true;
+                    txtCommand.ReadOnly = false;
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Please Enter Your Host and Password.");
+                    MessageBox.Show(ex.ToString());
                 }
             }
-            else if (action == "Disconnect")
+            else
             {
-                connection.Close();
-                btnConnect.Text = "Connect";
-                lblStatus.Text = "Disconnect";
-                lblStatus.ForeColor = Color.Crimson;
-                rtxDisplay.Text = "";
-                tableOption.Visible = false;
-                btnSubmit.Enabled = false;
-                txtCommand.ReadOnly = true;
+                MessageBox.Show("Please Enter Your Host and Password.");
             }
         }
         //
@@ -148,30 +124,6 @@ namespace tik4net.controller
         private void Connection_OnReadRow(object sender, TikConnectionCommCallbackEventArgs args)
         {
             rtxDisplay.Text += (args.Word + "\n");
-        }
-        //
-        // Add command by Enter key
-        //
-        private void txtCommand_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
-            {
-                if (txtCommand.Text.Equals("clear"))
-                {
-                    rtxDisplay.Text = "";
-                    txtCommand.Text = "";
-                }
-                else
-                {
-                    commandRows.Add(txtCommand.Text);
-                    List<string> rows = new List<string>();
-                    foreach (string row in commandRows)
-                    {
-                        rtxDisplay.Text = txtCommand.Text + "\n";
-                    }
-                    txtCommand.Text = "";
-                }
-            }
         }
         //
         // Button Browser File
@@ -237,25 +189,17 @@ namespace tik4net.controller
 
                 }
             }
-            //using (var conn = tik4net.ConnectionFactory.OpenConnection(TikConnectionType.Api, "192.168.88.1", 8728, "admin", ""))
-            //{
-            //    var obj = conn.LoadList<InterfaceWireless>(conn.CreateParameter("default-name", "wlan1")).First();
-            //    obj.Disabled = false;
-            //    obj.Mode = tik4net.Objects.Interface.InterfaceWireless.WirelessMode.ApBridge;
-            //    obj.Ssid = "Testing Wifi Marketing";
-            //    conn.Save(obj);
-            //}
         }
-        //
-        // Get Router MAC
-        //
+        /// <summary>
+        /// Get Router MAC.
+        /// </summary>
         private void btnGetMAC_Click(object sender, EventArgs e)
         {
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
-            String MACAddress = string.Empty;
+            string MACAddress = string.Empty;
             foreach (NetworkInterface adapter in nics)
             {
-                if (MACAddress == String.Empty)
+                if (MACAddress == string.Empty)
                 {
                     IPInterfaceProperties properties = adapter.GetIPProperties();
                     MACAddress = adapter.GetPhysicalAddress().ToString();
@@ -263,19 +207,57 @@ namespace tik4net.controller
             }
             txtHost.Text = MACAddress;
         }
-
+        /// <summary>
+        /// User Management Form.
+        /// </summary>
         private void btnUserManagement_Click(object sender, EventArgs e)
         {
             UserMangementForm umf = new UserMangementForm();
             umf.getter(connection);
             umf.ShowDialog();
         }
-
+        /// <summary>
+        /// Basic Configuration Click Event.
+        /// </summary>
         private void btnBasicConfig_Click(object sender, EventArgs e)
         {
             BasicConfigurationForm basicConfig = new BasicConfigurationForm();
             basicConfig.getter(connection);
             basicConfig.ShowDialog();
+        }
+        /// <summary>
+        ///  Add command by Enter key.
+        /// </summary>
+        private void txtCommand_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                if (txtCommand.Text.Equals("clear"))
+                {
+                    rtxDisplay.Text = "";
+                    txtCommand.Text = "";
+                }
+                else
+                {
+                    commandRows.Add(txtCommand.Text);
+                    List<string> rows = new List<string>();
+                    foreach (string row in commandRows)
+                        rtxDisplay.Text += txtCommand.Text + "\n";
+                    txtCommand.Text = "";
+                }
+            }
+        }
+        /// <summary>
+        ///  Submit By Ctrl + Enter Keys.
+        /// </summary>
+        private void txtCommand_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && ModifierKeys == Keys.Control)
+            {
+                string command = txtCommand.Text;
+                ExecuteCommand(command);
+                txtCommand.Text = "";
+            }
         }
     }
 }
